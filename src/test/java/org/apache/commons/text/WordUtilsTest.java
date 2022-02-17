@@ -18,6 +18,8 @@ package org.apache.commons.text;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
@@ -556,6 +558,22 @@ public class WordUtilsTest {
     @Test
     public void testWrapWithRegexMatchOfLength0() {
         assertThat(WordUtils.wrap("abcdef", 2, "\n", false, "(?=d)")).isEqualTo("abc\ndef");
+    }
+
+    @Test
+    public void testIsDelimiterWithChar() {
+        assertFalse(WordUtils.isDelimiter('\n', new char[]{',', ' ', ';', '|'}));
+        assertTrue(WordUtils.isDelimiter(' ', new char[]{',', ' ', ';', '|'}));
+        assertFalse(WordUtils.isDelimiter('a', null));
+        assertTrue(WordUtils.isDelimiter(' ', null));
+    }
+
+    @Test
+    public void testIsDelimeterWithCodePoint() {
+        assertFalse(WordUtils.isDelimiter(36, new char[]{',', ' ', ';', '|'}));
+        assertTrue(WordUtils.isDelimiter(32, new char[]{',', ' ', ';', '|'}));
+        assertFalse(WordUtils.isDelimiter(97, null));
+        assertTrue(WordUtils.isDelimiter(32, null));
     }
 
 }

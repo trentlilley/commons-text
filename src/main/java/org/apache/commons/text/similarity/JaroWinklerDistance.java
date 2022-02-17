@@ -90,7 +90,7 @@ public class JaroWinklerDistance implements EditDistance<Double> {
      *             class.
      */
     @Deprecated
-    protected static int[] matches(final CharSequence first, final CharSequence second) {
+    public static int[] matches(final CharSequence first, final CharSequence second) {
         final CharSequence max;
         final CharSequence min;
         if (first.length() > second.length()) {

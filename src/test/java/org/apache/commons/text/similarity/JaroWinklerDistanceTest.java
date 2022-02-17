@@ -17,6 +17,7 @@
 package org.apache.commons.text.similarity;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -67,6 +68,21 @@ public class JaroWinklerDistanceTest {
     @Test
     public void testGetJaroWinklerDistance_NullString() {
         assertThatIllegalArgumentException().isThrownBy(() -> distance.apply(null, "clear"));
+    }
+
+    @Test
+    public void testMatches() {
+        int[] p = JaroWinklerDistance.matches("dwayne", "duane");
+        assertArrayEquals(new int[]{4, 0, 1}, p);
+
+        p = JaroWinklerDistance.matches("a", "a");
+        assertArrayEquals(new int[]{1, 0, 1}, p);
+
+        p = JaroWinklerDistance.matches("", "");
+        assertArrayEquals(new int[]{0, 0, 0}, p);
+
+        p = JaroWinklerDistance.matches("abc", "def");
+        assertArrayEquals(new int[]{0, 0, 0}, p);
     }
 
 }
